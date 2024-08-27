@@ -1,5 +1,5 @@
 {
-	"name": "dataflow3",
+	"name": "DF_Aggregate_CustomerOrders",
 	"properties": {
 		"folder": {
 			"name": "Question 1"

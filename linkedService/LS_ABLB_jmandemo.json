@@ -1,0 +1,12 @@
+{
+	"name": "LS_ABLB_jmandemo",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=stjmandemodata001;EndpointSuffix=core.windows.net;",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQERDQ0ZBMEQ0LUYwMEItNEE1Ri04NTcyLTc1NzhEM0YzMzRGOV80MTlmNGZlNi01NmMwLTRkZjAtOGNhMC1hZWRhODM2YmIxNGIiDQp9"
+		}
+	}
+}

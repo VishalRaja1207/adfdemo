@@ -1,0 +1,9 @@
+{
+	"name": "adf-jmandemo-prod",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7e92a299-0eb5-4666-adf3-bd4738595ce3",
+		"tenantId": "2800c0a0-70e9-49be-8733-faeaa6aced99"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "DF_Split_Superstore",
+	"properties": {
+		"folder": {
+			"name": "Question 2"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}

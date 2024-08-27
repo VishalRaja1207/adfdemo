@@ -31,7 +31,12 @@
 						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "MergeFiles"
+							"copyBehavior": "MergeFiles",
+							"metadata": [
+								{
+									"value": ""
+								}
+							]
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -192,7 +197,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SQL_Raw",
+						"referenceName": "DS_SQL_Users_Prod",
 						"type": "DatasetReference",
 						"parameters": {
 							"table": "customers"
@@ -260,7 +265,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SQL_Raw",
+						"referenceName": "DS_SQL_Users_Prod",
 						"type": "DatasetReference",
 						"parameters": {
 							"table": "orders"

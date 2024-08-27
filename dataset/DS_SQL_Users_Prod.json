@@ -1,5 +1,5 @@
 {
-	"name": "DS_SQL_Raw",
+	"name": "DS_SQL_Users_Prod",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_SQL_jmandemo",

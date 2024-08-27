@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "PL_DATA_DS_ABLB_CustomerOrder_TO_DS_ABLB_CustomerOrder",
 	"properties": {
 		"activities": [
 			{
@@ -277,6 +277,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "Question 1"
+		},
 		"annotations": [],
 		"lastPublishTime": "2024-08-27T07:33:11Z"
 	},

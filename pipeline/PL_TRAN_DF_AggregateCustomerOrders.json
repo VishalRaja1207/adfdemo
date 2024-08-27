@@ -1,5 +1,5 @@
 {
-	"name": "PL_TRAN_DF_CleanCustomerOrder",
+	"name": "PL_TRAN_DF_AggregateCustomerOrders",
 	"properties": {
 		"activities": [
 			{
@@ -16,30 +16,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow2",
+						"referenceName": "dataflow3",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"CustomersSource": {
-								"table": "customers",
-								"schema": "staging"
-							},
-							"OrdersSource": {
-								"table": "orders",
-								"schema": "staging"
-							},
-							"CustomersSink": {
-								"table": "customers",
+							"CustomerSource": {
+								"table": "customer",
 								"schema": "prep"
 							},
-							"OrdersSink": {
-								"table": "customer"
-							}
-						},
-						"linkedServiceParameters": {
-							"OrdersSink": {
-								"schemaLinkedService": {
-									"table": "customer"
-								}
+							"OrderSource": {
+								"table": "customer",
+								"schema": "prep"
+							},
+							"CustomerOrders": {
+								"table": "customer",
+								"schema": "reporting"
 							}
 						}
 					},
@@ -54,8 +44,6 @@
 		"folder": {
 			"name": "Question 1"
 		},
-		"annotations": [],
-		"lastPublishTime": "2024-08-27T07:33:11Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+		"annotations": []
+	}
 }

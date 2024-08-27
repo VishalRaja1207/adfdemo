@@ -45,6 +45,9 @@
 				{
 					"name": "CleanNullValuesOrders",
 					"description": "Cleaning Date null values to 9999-12-12"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -77,16 +80,17 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> OrdersSource",
-				"CustomersSource derive(LastName =  iif(LastName == \"NULL\",  \"\" , LastName),",
-				"          Email =  iif(Email == \"NULL\" || isNull(Email),  \"\" , Email),",
-				"          PhoneNumber =  iif(PhoneNumber == \"NULL\" || isNull(PhoneNumber),  \"000-0000\" , PhoneNumber),",
-				"          Address =  iif(Address== \"NULL\" || isNull(Address),  \"\" , Address),",
-				"          City =  iif(City== \"NULL\" || isNull(City),  \"\" , City),",
-				"          State =  iif(State== \"NULL\" || isNull(State),  \"\" , State),",
+				"CustomersSource derive(LastName = iif(LastName == \"NULL\",  \"\" , LastName),",
+				"          Email = iif(Email == \"NULL\" || isNull(Email),  \"\" , Email),",
+				"          PhoneNumber = iif(PhoneNumber == \"NULL\" || isNull(PhoneNumber),  \"000-0000\" , PhoneNumber),",
+				"          Address = iif(Address== \"NULL\" || isNull(Address),  \"\" , Address),",
+				"          City = iif(City== \"NULL\" || isNull(City),  \"\" , City),",
+				"          State = iif(State== \"NULL\" || isNull(State),  \"\" , State),",
 				"          ZipCode = iif(isNull(ZipCode), 00000, ZipCode),",
-				"          Country =  iif(Country== \"NULL\" || isNull(Country),  \"\" , Country)) ~> CleanNullValuesCustomers",
-				"OrdersSource derive(OrderTimestamp =  iif(isNull(OrderTimestamp),  toDate(\"9999-12-12\"), OrderTimestamp)\r",
-				") ~> CleanNullValuesOrders",
+				"          Country = iif(Country== \"NULL\" || isNull(Country),  \"\" , Country)) ~> CleanNullValuesCustomers",
+				"OrdersSource derive(OrderTimestamp = iif(isNull(OrderTimestamp),  toDate(\"9999-12-12\"), OrderTimestamp)) ~> CleanNullValuesOrders",
+				"CleanNullValuesOrders aggregate(groupBy(OrderID),",
+				"     each(match(name != 'OrderID'), $$ = first($$))) ~> aggregate1",
 				"CleanNullValuesCustomers sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -98,7 +102,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> CustomersSink",
-				"CleanNullValuesOrders sink(allowSchemaDrift: true,",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",

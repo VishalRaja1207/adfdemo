@@ -19,7 +19,15 @@
 					"name": "OrderSource"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Users_Prod",
+						"type": "DatasetReference"
+					},
+					"name": "CustomerOrders"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
@@ -65,7 +73,18 @@
 				"     broadcast: 'auto')~> join1",
 				"join1 aggregate(groupBy(CustomerSource@CustomerID),",
 				"     Total_Price = sum(Price),",
-				"          Total_Orders = count(OrderID)) ~> aggregate1"
+				"          Total_Orders = count(OrderID)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> CustomerOrders"
 			]
 		}
 	}

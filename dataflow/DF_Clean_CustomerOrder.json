@@ -47,7 +47,8 @@
 					"description": "Cleaning Date null values to 9999-12-12"
 				},
 				{
-					"name": "aggregate1"
+					"name": "FilterRows",
+					"description": "Filter repeated Rows"
 				}
 			],
 			"scriptLines": [
@@ -90,7 +91,7 @@
 				"          Country = iif(Country== \"NULL\" || isNull(Country),  \"\" , Country)) ~> CleanNullValuesCustomers",
 				"OrdersSource derive(OrderTimestamp = iif(isNull(OrderTimestamp),  toDate(\"9999-12-12\"), OrderTimestamp)) ~> CleanNullValuesOrders",
 				"CleanNullValuesOrders aggregate(groupBy(OrderID),",
-				"     each(match(name != 'OrderID'), $$ = first($$))) ~> aggregate1",
+				"     each(match(name != 'OrderID'), $$ = first($$))) ~> FilterRows",
 				"CleanNullValuesCustomers sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -102,7 +103,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> CustomersSink",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"FilterRows sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",

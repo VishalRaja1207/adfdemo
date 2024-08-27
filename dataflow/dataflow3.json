@@ -1,6 +1,9 @@
 {
 	"name": "dataflow3",
 	"properties": {
+		"folder": {
+			"name": "Question 1"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

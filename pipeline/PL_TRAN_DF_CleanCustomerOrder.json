@@ -32,13 +32,15 @@
 								"schema": "prep"
 							},
 							"OrdersSink": {
-								"table": "customer"
+								"table": "orders",
+								"schema": "prep"
 							}
 						},
 						"linkedServiceParameters": {
 							"OrdersSink": {
 								"schemaLinkedService": {
-									"table": "customer"
+									"table": "orders",
+									"schema": "prep"
 								}
 							}
 						}

@@ -37,7 +37,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_DATA_DS_SQL_CustomerOrder_TO_DS_SQL_CustomerOrder",
+						"referenceName": "PL_DATA_DS_ABLB_CustomerOrder_TO_DS_SQL_CustomerOrder",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

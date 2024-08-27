@@ -5,6 +5,9 @@
 			"referenceName": "LS_ABLB_jmandemo",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Question 1"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

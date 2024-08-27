@@ -20,15 +20,15 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"CustomerSource": {
-								"table": "customer",
+								"table": "customers",
 								"schema": "prep"
 							},
 							"OrderSource": {
-								"table": "customer",
+								"table": "orders",
 								"schema": "prep"
 							},
 							"CustomerOrders": {
-								"table": "customer",
+								"table": "customer_orders",
 								"schema": "reporting"
 							}
 						}

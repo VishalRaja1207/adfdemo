@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "ACT_MT_Copy_ABLB_CustomerDetails_To_ABLB_Customer",
+				"description": "It copies all customer details to a consolidated customer details data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -31,12 +32,7 @@
 						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "MergeFiles",
-							"metadata": [
-								{
-									"value": ""
-								}
-							]
+							"copyBehavior": "MergeFiles"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -72,6 +68,7 @@
 			},
 			{
 				"name": "ACT_MT_Copy_ABLB_OrderDetails_To_ABLB_Order",
+				"description": "It copies all order details to a consolidated order details data",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -139,6 +136,7 @@
 			},
 			{
 				"name": "ACT_MT_Copy_ABLB_Customer_To_SQL_Customer",
+				"description": "It copies consolidated customer details to a customers table in staging schema",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -171,7 +169,13 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"CustomerID"
+							]
+						},
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
@@ -200,13 +204,15 @@
 						"referenceName": "DS_SQL_Users_Prod",
 						"type": "DatasetReference",
 						"parameters": {
-							"table": "customers"
+							"table": "customers",
+							"schema": "staging"
 						}
 					}
 				]
 			},
 			{
 				"name": "ACT_MT_Copy_ABLB_Order_To_SQL_Order",
+				"description": "It copies consolidated order details to a orders table in staging schema",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -239,7 +245,13 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"OrderID"
+							]
+						},
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
@@ -268,7 +280,8 @@
 						"referenceName": "DS_SQL_Users_Prod",
 						"type": "DatasetReference",
 						"parameters": {
-							"table": "orders"
+							"table": "orders",
+							"schema": "staging"
 						}
 					}
 				]

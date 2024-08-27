@@ -9,13 +9,19 @@
 			"table": {
 				"type": "String",
 				"defaultValue": "customer"
+			},
+			"schema": {
+				"type": "String"
 			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "raw",
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
 			"table": {
 				"value": "@dataset().table",
 				"type": "Expression"

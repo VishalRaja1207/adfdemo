@@ -1,0 +1,112 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Users_Prod",
+						"type": "DatasetReference"
+					},
+					"name": "CustomersSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Users_Prod",
+						"type": "DatasetReference"
+					},
+					"name": "OrdersSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Users_Prod",
+						"type": "DatasetReference"
+					},
+					"name": "CustomersSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_Users_Prod",
+						"type": "DatasetReference"
+					},
+					"name": "OrdersSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CleanNullValuesCustomers"
+				},
+				{
+					"name": "CleanNullValuesOrders",
+					"description": "Cleaning Date null values to 9999-12-12"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as string,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          Address as string,",
+				"          City as string,",
+				"          State as string,",
+				"          ZipCode as integer,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> CustomersSource",
+				"source(output(",
+				"          OrderID as string,",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          Quantity as integer,",
+				"          OrderTimestamp as date,",
+				"          Price as float,",
+				"          CustomerID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> OrdersSource",
+				"CustomersSource derive(LastName =  iif(LastName == \"NULL\",  \"\" , LastName),",
+				"          Email =  iif(Email == \"NULL\" || isNull(Email),  \"\" , Email),",
+				"          PhoneNumber =  iif(PhoneNumber == \"NULL\" || isNull(PhoneNumber),  \"000-0000\" , PhoneNumber),",
+				"          Address =  iif(Address== \"NULL\" || isNull(Address),  \"\" , Address),",
+				"          City =  iif(City== \"NULL\" || isNull(City),  \"\" , City),",
+				"          State =  iif(State== \"NULL\" || isNull(State),  \"\" , State),",
+				"          ZipCode = iif(isNull(ZipCode), 00000, ZipCode),",
+				"          Country =  iif(Country== \"NULL\" || isNull(Country),  \"\" , Country)) ~> CleanNullValuesCustomers",
+				"OrdersSource derive(OrderTimestamp =  iif(isNull(OrderTimestamp),  toDate(\"9999-12-12\"), OrderTimestamp)\r",
+				") ~> CleanNullValuesOrders",
+				"CleanNullValuesCustomers sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> CustomersSink",
+				"CleanNullValuesOrders sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> OrdersSink"
+			]
+		}
+	}
+}

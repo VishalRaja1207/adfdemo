@@ -16,11 +16,24 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "dataflow2",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source1": {
-								"folder_name": "order"
+							"CustomersSource": {
+								"table": "customers",
+								"schema": "staging"
+							},
+							"OrdersSource": {
+								"table": "orders",
+								"schema": "staging"
+							},
+							"CustomersSink": {
+								"table": "customers",
+								"schema": "prep"
+							},
+							"OrdersSink": {
+								"table": "orders",
+								"schema": "prep"
 							}
 						}
 					},
